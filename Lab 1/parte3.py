@@ -107,6 +107,7 @@ def test_accuracy(net, test_iter):
     return Acc/N
 
 if __name__ == "__main__": 
+    '''
     #Ejercicio 1
     loss = torch.nn.CrossEntropyLoss(reduction='none')
     net1 = nn.Sequential(nn.Flatten(),
@@ -121,7 +122,7 @@ if __name__ == "__main__":
     train_iter, test_iter = load_data_fashion_mnist(num_batch)
 
     
-    '''
+    
     #Ejercicio 2
     lr = 0.3
     trainer = torch.optim.SGD(net1.parameters(), lr)
@@ -173,7 +174,7 @@ if __name__ == "__main__":
     plt.legend("Gráficas ejercicio 3")
     plt.grid(True)
     plt.show()
-    '''
+
     #Ejercicio 4
     lr = 1
     trainer = torch.optim.SGD(net1.parameters(), lr)
@@ -190,6 +191,81 @@ if __name__ == "__main__":
     plt.plot(epochs3, train_loss3, 'r-', label='Pérdida de entrenamiento')
     plt.plot(epochs3, train_acc3, 'b-o', label='Accuracy de entrenamiento')
     plt.plot(epochs3, test_acc3, 'g-s', label='Accuracy de prueba')
+
+    plt.xlabel("Épocas")
+    plt.ylabel("Valor")
+    plt.title("Evolución de pérdida y accuracy durante el entrenamiento")
+    plt.legend("Gráficas ejercicio 4")
+    plt.grid(True)
+    plt.show()
+    
+    #Ejercicio 5
+
+    loss = torch.nn.CrossEntropyLoss(reduction='none')
+    net2 = nn.Sequential(nn.Flatten(),
+                        nn.Linear(784, 256),
+                        nn.Sigmoid(),
+                        nn.Linear(256, 10))
+    def init_weights(m):
+        if type(m) == nn.Linear:
+            nn.init.normal_(m.weight, std=0.01)
+    net2.apply(init_weights)
+    num_batch = 256
+    train_iter, test_iter = load_data_fashion_mnist(num_batch)
+
+    lr = 1
+    trainer = torch.optim.SGD(net2.parameters(), lr)
+    num_epoch = 20
+    print("-------------Ejercicio 5---------------")
+    metrics4 = train(net2, train_iter, test_iter, loss, num_epoch, trainer)
+    
+    epochs4 = [int(m[0]) for m in metrics4]
+    train_loss4 = [float(m[1]) for m in metrics4]
+    train_acc4 = [float(m[2]) for m in metrics4]
+    test_acc4 = [float(m[3]) for m in metrics4]
+    # Graficar
+    plt.figure(figsize=(20, 6))
+    plt.plot(epochs4, train_loss4, 'r-', label='Pérdida de entrenamiento')
+    plt.plot(epochs4, train_acc4, 'b-o', label='Accuracy de entrenamiento')
+    plt.plot(epochs4, test_acc4, 'g-s', label='Accuracy de prueba')
+
+    plt.xlabel("Épocas")
+    plt.ylabel("Valor")
+    plt.title("Evolución de pérdida y accuracy durante el entrenamiento")
+    plt.legend("Gráficas ejercicio 4")
+    plt.grid(True)
+    plt.show()
+
+    '''
+
+    #Ejercicio 6
+    loss = torch.nn.CrossEntropyLoss(reduction='none')
+    net3 = nn.Sequential(nn.Flatten(),
+                        nn.Linear(784, 1024),
+                        nn.Sigmoid(),
+                        nn.Linear(1024, 10))
+    def init_weights(m):
+        if type(m) == nn.Linear:
+            nn.init.normal_(m.weight, std=0.01)
+    net3.apply(init_weights)
+    num_batch = 256
+    train_iter, test_iter = load_data_fashion_mnist(num_batch)
+
+    lr = 1
+    trainer = torch.optim.SGD(net3.parameters(), lr)
+    num_epoch = 20
+    print("-------------Ejercicio 6---------------")
+    metrics4 = train(net3, train_iter, test_iter, loss, num_epoch, trainer)
+    
+    epochs5 = [int(m[0]) for m in metrics4]
+    train_loss5 = [float(m[1]) for m in metrics4]
+    train_acc5 = [float(m[2]) for m in metrics4]
+    test_acc5 = [float(m[3]) for m in metrics4]
+    # Graficar
+    plt.figure(figsize=(20, 6))
+    plt.plot(epochs5, train_loss5, 'r-', label='Pérdida de entrenamiento')
+    plt.plot(epochs5, train_acc5, 'b-o', label='Accuracy de entrenamiento')
+    plt.plot(epochs5, test_acc5, 'g-s', label='Accuracy de prueba')
 
     plt.xlabel("Épocas")
     plt.ylabel("Valor")
