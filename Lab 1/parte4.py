@@ -44,6 +44,50 @@ class MLPautoencoder(nn.Module):
             X = self.out(X)
             return X
 
+def test_loss(net, test_iter, loss):
+    L, N = 0.0, 0
+    for X, _ in test_iter:
+        y_hat = net(X)
+        l = loss(y_hat, X)
+        L += l.sum().item()
+        N += l.numel()
+    return L / N
+
+def train_epoch(net, train_iter, loss, updater):
+    '''
+        Lleva adelante el entrenamiento de una sola época.
+
+        Parámetros:
+                net: la red neuronal que se va a entrenar
+                train_iter: iterador de datos de entrenamiento
+                loss: función de perdida a minimizar
+                updater: algoritmo de optimización
+
+        Salida:
+                L: pérdida calculada
+                Acc: accuracy de entrenamiento calculada
+    '''
+    # inserte su código aquí
+    L, N = 0.0, 0 
+    for X, y in train_iter:
+        l = loss(net(X), X.squeeze(1))
+        updater.zero_grad()
+        l.mean().backward()
+        updater.step()
+        L += l.sum()
+        N += l.numel()
+    return L/N, None
+
+def train(net, train_iter, test_iter, loss, num_epochs, updater):
+    metrics = []
+    for epoch in range(num_epochs):
+        L, _ = train_epoch(net, train_iter, loss, updater)
+        TestLoss = test_loss(net, test_iter, loss)
+        metric = (epoch + 1, L, TestLoss)
+        print(f"Época {epoch + 1}: Pérdida entrenamiento={L:.4f}, Pérdida prueba={TestLoss:.4f}")
+        metrics.append(metric)
+    return metrics
+
 def plot_reconstructions(model, images, n_images=10):
     noise = torch.nn.Sequential(torch.nn.Dropout(0.5))
     noise.train()
@@ -174,7 +218,8 @@ if __name__== "__main__":
     trainer = torch.optim.Adam(net.parameters())
     net.train()
     #ingrese su código aquí
-    num_epoch = 50
+    num_epoch = 5
+    metrics = train(net, iter_train, iter_valid, loss, num_epoch, trainer)
     #@title Grafique Predicciones de Validación
     # Codigo adicional para generar imágenes.
     net.eval()

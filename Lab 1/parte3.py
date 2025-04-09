@@ -145,7 +145,7 @@ if __name__ == "__main__":
     plt.xlabel("Épocas")
     plt.ylabel("Valor")
     plt.title("Evolución de pérdida y accuracy durante el entrenamiento ")
-    plt.legend("Gráficas ejercicio 2")
+    plt.legend()
     plt.grid(True)
     plt.show()
     '''
@@ -171,7 +171,7 @@ if __name__ == "__main__":
     plt.xlabel("Épocas")
     plt.ylabel("Valor")
     plt.title("Evolución de pérdida y accuracy durante el entrenamiento")
-    plt.legend("Gráficas ejercicio 3")
+    plt.legend()
     plt.grid(True)
     plt.show()
 
@@ -195,7 +195,7 @@ if __name__ == "__main__":
     plt.xlabel("Épocas")
     plt.ylabel("Valor")
     plt.title("Evolución de pérdida y accuracy durante el entrenamiento")
-    plt.legend("Gráficas ejercicio 4")
+    plt.legend()
     plt.grid(True)
     plt.show()
     
@@ -232,7 +232,7 @@ if __name__ == "__main__":
     plt.xlabel("Épocas")
     plt.ylabel("Valor")
     plt.title("Evolución de pérdida y accuracy durante el entrenamiento")
-    plt.legend("Gráficas ejercicio 4")
+    plt.legend()
     plt.grid(True)
     plt.show()
 
@@ -270,6 +270,6 @@ if __name__ == "__main__":
     plt.xlabel("Épocas")
     plt.ylabel("Valor")
     plt.title("Evolución de pérdida y accuracy durante el entrenamiento")
-    plt.legend("Gráficas ejercicio 4")
+    plt.legend()
     plt.grid(True)
     plt.show()
